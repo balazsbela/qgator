@@ -5,11 +5,16 @@ import "Core/loader.js" as Loader
 Rectangle {
     property variant listItem
     signal listItemClicked(string meta)
+    signal listItemCommentsLinkClicked(string commentsUrl)
     property string navigationUrl
     width: 1200
     height: 660
     id: container
     color: "#eee"
+
+    onListItemCommentsLinkClicked:{
+        navigationUrl = commentsUrl
+    }
 
     onListItemClicked:  {
         if(meta === "First") {
@@ -95,7 +100,6 @@ Rectangle {
         onButtonClick: {
             contentProvider.retrieveSearchResults(searchField.text)
         }
-
     }
 
 

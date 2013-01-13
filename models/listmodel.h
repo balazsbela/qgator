@@ -37,8 +37,10 @@ public:
   ListItem* find(const QString &id) const;
   QModelIndex indexFromItem( const ListItem* item) const;
   QHash<int, QByteArray> roleNames() const override;
+  void sort ( int column, Qt::SortOrder order = Qt::AscendingOrder ) override;
   void clear();
 
+  inline QList<ListItem*>* list() { return &m_list; }
 private slots:
   void handleItemChange();
 

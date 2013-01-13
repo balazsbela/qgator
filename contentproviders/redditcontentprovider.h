@@ -1,13 +1,15 @@
-#ifndef HNCONTENTPROVIDER_H
-#define HNCONTENTPROVIDER_H
+#ifndef REDDITCONTENTPROVIDER_H
+#define REDDITCONTENTPROVIDER_H
 
 #include "icontentprovider.h"
 #include <QNetworkAccessManager>
 #include <QSemaphore>
 
-class HNContentProvider : public IContentProvider
+
+class RedditContentProvider : public IContentProvider
 {
     Q_OBJECT
+
 private:
     QNetworkAccessManager *manager;
     QObject* parent;
@@ -15,16 +17,17 @@ private:
     ListModel* createListModel(QSharedPointer<QJsonObject> jsonObject);
     void parseSearchResults(QSharedPointer <QJsonObject> jsonObject, ListModel* listModel);
     void parseFrontPageResults(ListModel* listModel, QSharedPointer <QJsonObject> jsonObject);
+
 public:
-    HNContentProvider();
-    HNContentProvider(QObject* parent);
+    RedditContentProvider();
+    RedditContentProvider(QObject* parent);
+
     virtual void retrieveContent() override;
     Q_INVOKABLE virtual void retrieveSearchResults(QString query) override;
 
-    QJsonValue parseFrontPageResults(QSharedPointer <QJsonObject> jsonObject);
 public slots:
     void slotRequestFinished(QNetworkReply* reply);
     virtual void update() override;
 };
 
-#endif // HNCONTENTPROVIDER_H
+#endif // REDDITCONTENTPROVIDER_H

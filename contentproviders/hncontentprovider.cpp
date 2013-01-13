@@ -6,13 +6,14 @@
 #include <QJsonParseError>
 #include <QJsonObject>
 #include <QStringList>
-#include "qtquick2applicationviewer.h"
-#include <QQmlContext>
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QMessageBox>
+#include <QFile>
 #include "../models/articleitem.h"
 
+
+#define COMMENTS_URL "http://news.ycombinator.com/item?id="
 
 HNContentProvider :: HNContentProvider()  {
     QObject::connect(manager, SIGNAL(finished(QNetworkReply *)),SLOT(slotRequestFinished(QNetworkReply *)));
@@ -68,15 +69,7 @@ void HNContentProvider :: slotRequestFinished(QNetworkReply *reply) {
         // }
 
         ListModel* listModel = this->createListModel(jsonObject);
-        QtQuick2ApplicationViewer* viewer = dynamic_cast<QtQuick2ApplicationViewer*>(parent);
-        if(viewer!=nullptr) {
-            qDebug() << "Added feedModel";
-            viewer->rootContext()->setContextProperty("feedModel",listModel);
-            viewer->showMaximized();
-        }
-        else {
-            qDebug() << "Could not add feeds to QML context!";
-        }
+        emit modelReady(listModel);
    }
 }
 
@@ -94,7 +87,8 @@ void HNContentProvider::parseSearchResults(QSharedPointer <QJsonObject> jsonObje
                                                        QUrl(obj.value("url").toString()),
                                                        (int) obj.value("points").toDouble(),
                                                        (int)obj.value("num_comments").toDouble(),
-                                                       obj.value("postedAgo").toString()));
+                                                       obj.value("postedAgo").toString(),
+                                                       QUrl(COMMENTS_URL+QString::number((int)obj.value("id").toDouble()))));
               }
             }
         }
@@ -111,7 +105,8 @@ void HNContentProvider::parseFrontPageResults(ListModel* listModel, QSharedPoint
                                                QUrl(obj.value("url").toString()),
                                                (int) obj.value("points").toDouble(),
                                                (int)obj.value("commentCount").toDouble(),
-                                               obj.value("postedAgo").toString()));
+                                               obj.value("postedAgo").toString(),
+                                               QUrl(COMMENTS_URL+QString::number((int)obj.value("id").toDouble()))));
         }
     }
 }

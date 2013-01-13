@@ -6,20 +6,22 @@
 #include <QUrl>
 #include <QVariant>
 #include <QHash>
+#include <QDebug>
 
 class ArticleItem : public ListItem
 {
     Q_OBJECT
 public:
     ArticleItem(QObject *parent = 0) : ListItem(parent) {}
-    explicit ArticleItem(QString title,QUrl url,int points,int commentCount,QString postedAgo);
+    explicit ArticleItem(QString title,QUrl url,int points,int commentCount,QString postedAgo,QUrl commentsUrl);
     public:
       enum Roles {
         titleRole = Qt::UserRole+1,
         urlRole,
         pointsRole,
         commentCountRole,
-        postedAgoRole
+        postedAgoRole,
+        commentsUrlRole
       };
 
     QVariant data(int role) const;
@@ -31,6 +33,7 @@ public:
     inline int points() const { return m_points; }
     inline int commentCount() const { return m_commentCount; }
     inline QString postedAgo() const { return m_postedAgo; }
+    inline QUrl commentsUrl() const { return m_commentsUrl; }
 
 private:
     QString m_title;
@@ -38,6 +41,7 @@ private:
     int m_points;
     int m_commentCount;
     QString m_postedAgo;
+    QUrl m_commentsUrl;
 };
 
 #endif // ARTICLEITEM_H

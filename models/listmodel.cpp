@@ -1,5 +1,8 @@
 #include "listmodel.h"
 #include <QAbstractListModel>
+#include <QtAlgorithms>
+#include <QDebug>
+#include "articleitem.h"
 
 
 ListModel::ListModel(ListItem* prototype, QObject *parent) :
@@ -99,4 +102,18 @@ ListItem * ListModel::takeRow(int row) {
   ListItem* item = m_list.takeAt(row);
   endRemoveRows();
   return item;
+}
+
+
+bool compareItems(ListItem* item1,ListItem* item2) {
+    ArticleItem* first = dynamic_cast<ArticleItem*>(item1);
+    ArticleItem* second = dynamic_cast<ArticleItem*>(item2);
+    if(first!=nullptr && second!=nullptr) {
+        return first->points() > second->points();
+    }
+    return false;
+}
+
+void ListModel :: sort( int column, Qt::SortOrder order ) {
+    qSort(m_list.begin(),m_list.end(),compareItems);
 }
