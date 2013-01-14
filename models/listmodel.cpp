@@ -117,3 +117,13 @@ bool compareItems(ListItem* item1,ListItem* item2) {
 void ListModel :: sort( int column, Qt::SortOrder order ) {
     qSort(m_list.begin(),m_list.end(),compareItems);
 }
+
+ListItem* ListModel ::getIndex(int index) {
+    return m_list.at(index);
+}
+
+void ListModel :: removeItems() {
+    qDeleteAll(m_list);
+    m_list.clear();
+    handleItemChange();
+}

@@ -17,11 +17,13 @@ SOURCES += main.cpp \
     models/listmodel.cpp \
     models/articleitem.cpp \
     contentproviders/redditcontentprovider.cpp \
-    contentproviders/aggregator.cpp
+    contentproviders/aggregator.cpp \
+    storage/datamanager.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
+
 
 OTHER_FILES += \
     qml/qGator/qGator.qml \
@@ -35,10 +37,14 @@ HEADERS += \
     models/listmodel.h \
     models/articleitem.h \
     contentproviders/redditcontentprovider.h \
-    contentproviders/aggregator.h
+    contentproviders/aggregator.h \
+    storage/datamanager.h \
+    storage/storage.h \
+    storage/articleitemmodel.h
 
-QT += webkit webkitwidgets declarative
+QT += webkit webkitwidgets declarative sql
 
 RC_FILE = application.rc
 
 CONFIG -= incremental
+

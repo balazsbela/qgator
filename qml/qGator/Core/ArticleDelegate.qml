@@ -34,7 +34,7 @@ Component {
                             textFormat: Text.RichText
                             anchors.leftMargin: 9
                             anchors.topMargin: 8
-                            anchors.rightMargin: -9
+                            anchors.rightMargin: 2
                             anchors.bottomMargin: -8
                             wrapMode: Text.WordWrap
                             onLinkActivated: {

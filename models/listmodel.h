@@ -41,6 +41,8 @@ public:
   void clear();
 
   inline QList<ListItem*>* list() { return &m_list; }
+  void removeItems();
+  ListItem* getIndex(int index);
 private slots:
   void handleItemChange();
 

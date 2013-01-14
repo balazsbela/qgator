@@ -10,14 +10,16 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    qmlRegisterType<Aggregator>("Aggregator",1,0,"ContentProvider");
+    qmlRegisterType<Aggregator>("org.balazsbela.aggregator",1,0,"ContentProvider");
 
     QtQuick2ApplicationViewer* viewer = new QtQuick2ApplicationViewer();
     viewer->setMainQmlFile(QStringLiteral("qml/qGator/qGator.qml"));
-    viewer->setResizeMode(QtQuick2ApplicationViewer::SizeRootObjectToView);
-    IContentProvider* aggregator = new Aggregator(viewer);
+    viewer->setResizeMode(QtQuick2ApplicationViewer::SizeRootObjectToView);       
+
+    Aggregator* aggregator = new Aggregator(viewer);
     viewer->rootContext()->setContextProperty("contentProvider", aggregator);
     aggregator->retrieveContent();
+
 
     return app.exec();
 }

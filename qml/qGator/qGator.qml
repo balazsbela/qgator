@@ -10,7 +10,7 @@ Rectangle {
     width: 1200
     height: 660
     id: container
-    color: "#eee"
+    color: "#eee"  
 
     onListItemCommentsLinkClicked:{
         navigationUrl = commentsUrl
@@ -34,6 +34,7 @@ Rectangle {
         anchors.fill: parent;
         opacity: 0.1
     }
+
     MouseArea {
         x: 0
         y: 0
@@ -102,9 +103,68 @@ Rectangle {
         }
     }
 
+    Core.Button {
+        id: saveButton
+        x: 512
+        y: 10
+        width: 180
+        height: 24
+        label: "Save current article"
+        buttonColor: "green"
+        anchors.left: searchField.right
+        anchors.leftMargin: 118
+        anchors.topMargin: 10
+        anchors.top: parent.top
+        buttonHeight: 30
+        buttonWidth: 70
+        onButtonClick: {
+            contentProvider.addToFavorites(articleList.currentIndex);
+        }
+    }
+
+    Core.Button {
+        id: removeFromFavorites
+        x: 716
+        y: 10
+        width: 284
+        height: 24
+        label: "Remove current from favorites"
+        buttonColor: "green"
+        anchors.left: searchField.right
+        anchors.leftMargin: 322
+        anchors.topMargin: 10
+        anchors.top: parent.top
+        buttonHeight: 30
+        buttonWidth: 70
+        onButtonClick: {
+            contentProvider.removeFromFavorites(articleList.currentIndex);
+        }
+    }
+
+    Core.Button {
+        id: favoritesButton
+        x: 1034
+        y: 10
+        width: 135
+        height: 24
+        label: "Favorites"
+        buttonColor: "green"
+        anchors.left: searchField.right
+        anchors.leftMargin: 640
+        anchors.topMargin: 10
+        anchors.top: parent.top
+        buttonHeight: 30
+        buttonWidth: 70
+        onButtonClick: {
+            contentProvider.loadFavorites();
+            articleList.model=feedModel;
+        }
+    }
+
 
     ListView {      
         id: articleList;
+        objectName:"articleList"
         x: 10
         y: 47
         model: feedModel
@@ -123,15 +183,15 @@ Rectangle {
             smooth: true
             opacity:0.6
         }
-        clip:true
+        clip:true        
     }
 
     Core.Browser {
         id:browser
-        x: 307
+        x: 313
         y: 47
         height:650
-        width:1050
+        width:1050        
     }   
 
     Core.LoadingImage {

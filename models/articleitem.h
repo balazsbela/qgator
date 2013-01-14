@@ -35,6 +35,9 @@ public:
     inline QString postedAgo() const { return m_postedAgo; }
     inline QUrl commentsUrl() const { return m_commentsUrl; }
 
+signals:
+    void listChanged();
+
 private:
     QString m_title;
     QUrl m_url;
