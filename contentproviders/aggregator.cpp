@@ -47,7 +47,10 @@ void Aggregator :: refreshList() {
         if(viewer!=nullptr) {
             qDebug() << "Added feedModel";
             viewer->rootContext()->setContextProperty("feedModel",this->model);
+            viewer->setMainQmlFile(QStringLiteral("qml/qGator/qGator.qml"));
+            viewer->setResizeMode(QtQuick2ApplicationViewer::SizeRootObjectToView);
             viewer->showMaximized();
+
         }
         modelAdded = true;
     }
